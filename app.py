@@ -20,7 +20,7 @@ posts = [
         "username": "alicia98",
     },
 ]
-count_posts = 2
+count_posts = 1
 
 
 @app.route("/")
@@ -54,6 +54,14 @@ def add_post():
     posts.append(post)
 
     return json.dumps({"posts": posts}), 201
+
+
+@app.route("/api/posts/<int:post_id>")
+def get_post_by_id(post_id):
+    if post_id >= len(posts):
+        return json.dumps({"Error": "ID doesn't exist. Bad Request"}), 400
+    post = posts[post_id]
+    return json.dumps(post), 200
 
 
 if __name__ == "__main__":
